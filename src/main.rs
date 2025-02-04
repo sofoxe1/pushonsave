@@ -3,7 +3,7 @@ use std::{path::Path, process::Command, thread::sleep, time::Duration};
 use notify::{RecursiveMode, Result, Watcher};
 
 fn main() -> Result<()> {
-    let mut watcher = notify::recommended_watcher(|res| {
+    notify::recommended_watcher(|res| {
         match res {
            Ok(_) => {
             println!("adding to repository");
@@ -13,9 +13,7 @@ fn main() -> Result<()> {
            },
            Err(e) => println!("watch error: {:?}", e),
         }
-    })?;
-    watcher.watch(Path::new("."), RecursiveMode::Recursive)?;
-    sleep(Duration::MAX);
-    
+    })?.watch(Path::new("."), RecursiveMode::Recursive)?;
+    sleep(Duration::MAX);    
     Ok(())
 }
